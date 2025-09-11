@@ -26,7 +26,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/house-price-api:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/maison-creteil:latest
           context: .
 
       # 4: Deploy to your VM
@@ -38,13 +38,13 @@ jobs:
           password: ${{ secrets.DEPLOY_PASSWORD }}
           script: |
             echo "Pulling latest Docker image"
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/house-price-api:latest
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/maison-creteil:latest
 
             echo "Stopping existing container"
-            docker stop house-price-api || true
-            docker rm house-price-api || true
+            docker stop maison-creteil || true
+            docker rm maison-creteil || true
 
             echo "Starting container"
-            docker run -d --name house-price-api -p 7991:7991 ${{ secrets.DOCKERHUB_USERNAME }}/house-price-api:latest
+            docker run -d --name maison-creteil -p 7991:7991 ${{ secrets.DOCKERHUB_USERNAME }}/maison-creteil:latest
 
             echo "Deployment complete!"
